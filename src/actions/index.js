@@ -1,13 +1,14 @@
-import { ADD_POST, DELETE_POST, FETCH_POST } from './types';
+import { ADD_ORDEN, DELETE_ORDEN, DELIVERY_ORDEN,FETCH_ORDEN } from './types';
+import ApiClient from '../ApiClient'
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:4000/posts';
+const apiUrl = '/api';
 
-export const createPost = ({ title, body }) => {
+export const createOrden = (orden) => {
   return (dispatch) => {
-    return axios.post(`${apiUrl}/add`, {title, body})
+    return axios.post(`${apiUrl}/v1/add`, {"ordenNumber": orden.numero, "ordenDetail": orden.detail, "userName": 'Yvan'})
       .then(response => {
-        dispatch(createPostSuccess(response.data))
+        dispatch(createOrdenSuccess(response.data))
       })
       .catch(error => {
         throw(error);
@@ -15,31 +16,46 @@ export const createPost = ({ title, body }) => {
   };
 };
 
-export const createPostSuccess =  (data) => {
+export const createOrdenSuccess =  (data) => {
   return {
-    type: ADD_POST,
+    type: ADD_ORDEN,
     payload: {
-      _id: data._id,
-      title: data.title,
-      body: data.body
+      id: data.id,
+      ordenNumber: data.ordenNumber,
+      ordenDetail: data.ordenDetail,
+      carrier: data.carrier,
+      packages: data.packages
     }
   }
 };
 
-export const deletePostSuccess = id => {
+export const deliveryOrdenSuccess =  (data) => {
   return {
-    type: DELETE_POST,
+    type: DELIVERY_ORDEN,
+    payload: {
+      id: data.id,
+      ordenNumber: data.ordenNumber,
+      ordenDetail: data.ordenDetail,
+      carrier: data.carrier,
+      packages: data.packages
+    }
+  }
+};
+
+export const deleteOrdenSuccess = id => {
+  return {
+    type: DELETE_ORDEN,
     payload: {
       id
     }
   }
 }
 
-export const deletePost = id => {
+export const deleteOrden = id => {
   return (dispatch) => {
-    return axios.get(`${apiUrl}/delete/${id}`)
+    return axios.get(`${apiUrl}/v1/delete/${id}`)
       .then(response => {
-        dispatch(deletePostSuccess(response.data))
+        dispatch(deleteOrdenSuccess(response.data))
       })
       .catch(error => {
         throw(error);
@@ -47,18 +63,29 @@ export const deletePost = id => {
   };
 };
 
-export const fetchPosts = (posts) => {
+export const deliveryOrden = (orden) => {
+  return (dispatch) => {
+    return axios.post(`${apiUrl}/v1/update`, {"id": orden.id, "carrier": orden.carrier, "packages": orden.packages})
+      .then(response => {
+        dispatch(deliveryOrdenSuccess(response.data))
+      })
+      .catch(error => {
+        throw(error);
+      });
+  };
+};
+export const fetchOrden = (ordenes) => {
   return {
-    type: FETCH_POST,
-    posts
+    type: FETCH_ORDEN,
+    ordenes
   }
 };
 
-export const fetchAllPosts = () => {
+export const fetchAllOrden = () => {
   return (dispatch) => {
-    return axios.get(apiUrl)
+      ApiClient.getAllOrdens()
       .then(response => {
-        dispatch(fetchPosts(response.data))
+        dispatch(fetchOrden(response))
       })
       .catch(error => {
         throw(error);

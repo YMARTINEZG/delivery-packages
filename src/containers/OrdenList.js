@@ -1,21 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Post from '../components/Post';
-import { deletePost } from '../actions';
+import Orden from '../components/Orden';
+import { deleteOrden } from '../actions';
 
-function PostList({ posts, onDelete }) {
-  if(!posts.length) {
+const OrdenList = ({ ordenes, onDelete }) => {
+  if(!ordenes.length) {
     return (
       <div>
-        No Posts
+        No Ordenes
       </div>
     )
   }
   return (
     <div>
-      {posts.map(post => {
+      {ordenes.map(orden => {
         return (
-          <Post post={ post } onDelete={ onDelete } key={ post._id } />
+          <Orden orden={ orden } onDelete={ onDelete } key={ orden.id } />
         );
       })}
     </div>
@@ -24,14 +24,14 @@ function PostList({ posts, onDelete }) {
 
 const mapStateToProps = state => {
   return {
-    posts: state.posts
+    ordenes: state.ordenes
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onDelete: id => {
-      dispatch(deletePost(id));
+      dispatch(deleteOrden(id));
     }
   };
 };
@@ -39,4 +39,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(PostList);
+)(OrdenList);

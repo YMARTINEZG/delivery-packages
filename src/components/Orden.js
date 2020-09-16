@@ -9,14 +9,15 @@ const styles = {
   borderRadius: '7px'
 };
 
-export default ({ post: { title, body, _id }, onDelete }) => {
+const Orden = ({ orden, onDelete }) => {
   return (
     <div style={ styles }>
-      <h2>{ title }</h2>
-      <p>{ body }</p>
-      <button className="btn btn-danger" type="button" onClick={() => onDelete(_id)}>
+      <h2>{ orden.ordenNumber }</h2>
+      <p>{ orden.ordenDetail }</p>
+      <button className="btn btn-danger" type="button" onClick={() => onDelete(orden.id)}>
         Remove
       </button>
     </div>
   );
 };
+export default Orden
