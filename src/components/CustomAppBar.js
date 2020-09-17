@@ -4,6 +4,7 @@ import { createStyles, makeStyles,createMuiTheme } from '@material-ui/core'
 import { useHistory } from "react-router-dom"
 import { lightBlue } from '@material-ui/core/colors';
 import grey from "@material-ui/core/colors/grey";
+import Footer from './Footer';
 
 export const theme = createMuiTheme({
   palette: {
@@ -35,11 +36,12 @@ const CustomAppBar = () => {
 
     return (
       <div claseName="classes.root">
-           <div className="classesRow"> 
+           <div className="classes.grow"> 
                <Button color="primary" variant="contained" onClick={() => history.push('/main')}>Ordenes</Button>
                <Button color="secundary" variant="contained" onClick={() => history.push('/add')}>Create</Button>
                <Button color="sucess" variant="contained" onClick={() => history.push('/activate')}>Despacho</Button>
            </div>
+           <Footer/>
       </div>
       
     );

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Typography,
          TextField,
+         Container,
           Button,
           FormControlLabel,
           Grid, Checkbox } from "@material-ui/core";
@@ -61,8 +62,9 @@ const NewOrden = ({onAddOrden}) => {
   };
 
   return (
-    <div>
+    <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <div className={classes.paper}>
       <Avatar className={classes.avatar}>
         <LocalShippingIcon />
       </Avatar>
@@ -105,21 +107,21 @@ const NewOrden = ({onAddOrden}) => {
             label="Activate"
           />
           <br />
-          <Grid container>
-          <Button
-            fullWidth
-            variant="contained"
-            color="secondary"
-            onClick={handleSubmit}
-          >
-          Create
-          </Button>
-          <Button
-            fullWitdh
-            variant="contained"
-            color="primary"
-            onClick={handleReset}
-          > 
+          <Grid container justify="space-between">
+            <Button
+              halfWidth
+              variant="contained"
+              color="secondary"
+              onClick={handleSubmit}
+            >
+            Create
+            </Button>
+            <Button
+              halfWitdh
+              variant="contained"
+              color="primary"
+              onClick={handleReset}
+            > 
           Reset
           </Button>          
           </Grid>
@@ -136,7 +138,8 @@ const NewOrden = ({onAddOrden}) => {
             </Grid>
           </Grid>           
       </form>
-    </div>
+      </div>
+    </Container>
     );
 }
 

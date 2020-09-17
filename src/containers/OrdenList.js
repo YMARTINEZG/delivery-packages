@@ -2,8 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Orden from '../components/Orden';
 import { deleteOrden } from '../actions';
-
+import Button from '@material-ui/core/Button'
+import {useHistory} from "react-router-dom"
 const OrdenList = ({ ordenes, onDelete }) => {
+  const history = useHistory()
   if(!ordenes.length) {
     return (
       <div>
@@ -13,11 +15,13 @@ const OrdenList = ({ ordenes, onDelete }) => {
   }
   return (
     <div>
-      {ordenes.map(orden => {
-        return (
-          <Orden orden={ orden } onDelete={ onDelete } key={ orden.id } />
-        );
-      })}
+      <div>
+        {ordenes.map(orden => {
+          return (
+            <Orden orden={ orden } onDelete={ onDelete } key={ orden.id } />
+          );
+        })}
+      </div>
     </div>
   );
 }
