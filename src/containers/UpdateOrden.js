@@ -7,7 +7,7 @@ import { Typography,
           Grid, Checkbox } from "@material-ui/core";
 
 import { connect } from 'react-redux';
-import { createOrden } from '../actions';
+import { updateOrden } from '../actions';
 import LocalShippingIcon from '@material-ui/icons/LocalShipping';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,7 +16,7 @@ import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -36,29 +36,50 @@ const useStyles = makeStyles((theme) => ({
 
 const mapDispatchToProps = dispatch => {
   return {
-    onAddOrden: (orden)=> {
-      dispatch(createOrden(orden));
+    onUpdateOrden: (orden)=> {
+      dispatch(updateOrden(orden));
     }
   };
 };
-const NewOrden = ({onAddOrden}) => {
+const mapStateToProps = (state, ownProps) => {
+    let editOrden = {id: 0, ordenNumber: '', ordenDetail: '', carrier: 'TEST', packages: 0, status: ''};
+    const editId = ownProps.match.params.id;   
+    if (state.ordenes.length > 0) {
+      editOrden = Object.assign({}, state.ordenes.find(orden => orden.id == editId))
+    }
+    return {orden: editOrden};
+
+    // return {
+    //   ordenes: state.ordenes
+    // };
+  };
+const UpdateOrden = ({orden, onUpdateOrden}) => {
   const classes = useStyles();
-  const [numero, setNumero] = useState('')
-  const [carrier, setCarrier] = useState('')
-  const [detail, setDetail] = useState('')
+  const [numero, setNumero] = useState(orden.ordenNumber)
+  const [id, setId] = useState(orden.id)
+  const [status, setStatus] = useState(orden.status)
+  const [carrier, setCarrier] = useState(orden.carrier)
+  const [packages, setPackages] = useState(orden.packages)
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (numero.trim() && detail.trim()) {
-      onAddOrden({numero, detail});
+    if (carrier.trim() && packages > 0) {
+      onUpdateOrden({id, carrier, packages, status});
       handleReset();
     }
   };
 
   const handleReset = () => {
-    setNumero('')
-    setDetail('')
-    setCarrier('')
+    setCarrier(carrier)
+    setPackages(packages)
+  };
+
+  const handleCheckedValue = (e) => {
+    if (e.target.checked){
+      setStatus("ACTIVE")
+    }else {
+      setStatus(orden.status)
+    }
   };
 
   return (
@@ -76,9 +97,8 @@ const NewOrden = ({onAddOrden}) => {
              label="Orden #"
              margin="normal"
              variant="outlined"
-             required
+             disabled
              value={numero}
-             onChange={e => setNumero(e.target.value)}
              fullWidth
           />
           <TextField
@@ -91,19 +111,17 @@ const NewOrden = ({onAddOrden}) => {
           />
           <br />
           <TextField
-             multiline
-             rows="4"
-             label="Detail"
+             type="number"
+             label="Packages"
              margin="normal"
              variant="outlined"
-             value={detail}
-             required
-             onChange={e => setDetail(e.target.value)}
+             value={packages}
+             onChange={e => setPackages(e.target.value)}
              fullWidth
           />
           <br />
           <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
+            control={<Checkbox value="remember" color="primary" onChange={ handleCheckedValue }/>}
             label="Activate"
           />
           <br />
@@ -114,7 +132,7 @@ const NewOrden = ({onAddOrden}) => {
               color="secondary"
               onClick={handleSubmit}
             >
-            Create
+            Update
             </Button>
             <Button
               size="small"
@@ -143,4 +161,4 @@ const NewOrden = ({onAddOrden}) => {
     );
 }
 
-export default connect(null,mapDispatchToProps)(NewOrden);
+export default connect(mapStateToProps,mapDispatchToProps)(UpdateOrden);

@@ -14,11 +14,9 @@ const useStyles = makeStyles((theme) => ({
     },
   }))
 
-const Despacho = ({ orden, onDelivery }) => {
+const NewGuia = ({ orden, onDelivery }) => {
   const classes = useStyles()
   return (
-
-    
     <div claseName="classes.root">
       <Card>
          <LocalShippingIcon className={classes.icon}/>
@@ -36,4 +34,4 @@ const Despacho = ({ orden, onDelivery }) => {
     </div>
   );
 };
-export default Despacho
+export default NewGuia

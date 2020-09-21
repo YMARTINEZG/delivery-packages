@@ -1,4 +1,4 @@
-import { ADD_ORDEN, DELETE_ORDEN, DELIVERY_ORDEN, FETCH_ORDEN } from '../actions/types';
+import { ADD_ORDEN, ADD_GUIA, DELETE_ORDEN, DELIVERY_ORDEN, FETCH_ORDEN } from '../actions/types';
 
 export default function ordenReducer(state = [], action) {
   switch (action.type) {
