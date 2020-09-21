@@ -4,7 +4,7 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import TrackIcon from '@material-ui/icons/LocalShipping';
 import CheckBoxBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import { createStyles, makeStyles,IconButton } from '@material-ui/core'
-import { Grid, Typography, TextField } from "@material-ui/core"
+import { Grid, Typography, TextField, Container } from "@material-ui/core"
 const apiUrl = '/api';
 const useStyles = makeStyles(theme => ({
     root: {
@@ -34,7 +34,7 @@ const Search = () => {
           ev.preventDefault();
         }
     }
-    const renderElement =(elem) => {
+    const renderElement = (elem) => {
         if(elem.deliveryStatus) {
           return (
             <Typography display="inline">
@@ -68,7 +68,7 @@ const Search = () => {
         }
     }
     return (
-        <div>
+        <Container>
         <div>
            <Typography variant="h6">Tracking : </Typography>
            <form onSubmit={handleEnterKey}>
@@ -97,7 +97,7 @@ const Search = () => {
             {renderFinalLine(query)}
           </Grid>
         </div>      
-      </div>  
+      </Container>  
     )
 }
 export default Search

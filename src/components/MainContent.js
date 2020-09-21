@@ -46,14 +46,10 @@ const MainContent = () => {
   
     return (
       <Container className="classes.main">
-        <Route exact path="/" render={() =>
-          <div>
-            <Root/>
-            <OrdenList/>          
-          </div>
-        }/>      
-        <Route path="/add" exact component={CreateOrden}/> 
-        <Route path="/activate" exact component={DespachoList}/>
+
+        <Route exact path="/" component={OrdenList}/>   
+        <Route path="/add" component={CreateOrden}/> 
+        <Route path="/activate" component={DespachoList}/>
         <Route path="/edit/:id" component={UpdateOrden}/>
         <Route path="/guia/:id" component={CreateGuia}/>
         <Route path="/search" component={Search}/>

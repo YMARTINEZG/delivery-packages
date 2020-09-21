@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Typography,
          TextField,
           Button,
-          Grid, Paper, CardMedia } from "@material-ui/core";
+          Grid, Paper, CardMedia, Container } from "@material-ui/core";
 
 import { connect } from 'react-redux';
 import { createGuia } from '../actions';
@@ -72,6 +72,7 @@ const CreateGuia = ({orden, onUpdateGuia}) => {
   };
 
   return (
+    <Container>
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={6} md={7} className={classes.image}>
@@ -125,7 +126,9 @@ const CreateGuia = ({orden, onUpdateGuia}) => {
         </form>
         </div>      
       </Grid>
-    </Grid>
+    </Grid>    
+    </Container>
+
     );
 }
 
